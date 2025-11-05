@@ -1,7 +1,7 @@
 {
   "name": "simple-image-to-pdf",
   "author": "McCoy",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A simple image to PDF converter",
   "keywords": [
     "pdf",
