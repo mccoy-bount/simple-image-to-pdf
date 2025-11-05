@@ -1,13 +1,13 @@
 {
     "$schema": "https://json.schemastore.org/tsconfig",
     "compilerOptions": {
+      "esModuleInterop": true,
+      "allowSyntheticDefaultImports": true,
       "declaration": true,
       "declarationMap": true,
-      "esModuleInterop": true,
       "moduleResolution": "node",
       "strict": true,
       "allowJs": true,
     },
     "include": ["index.ts"]
   }
-  

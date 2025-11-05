@@ -1,21 +1,54 @@
-import PDFDocument from 'pdfkit'
+import * as fs from 'fs';
+import sizeOf from 'image-size'
+import {PDFDocument} from 'pdf-lib'
+import * as sharp from 'sharp';
 
-const imageToPDF = (pages: (string | Buffer)[], size: PDFKit.PDFDocumentOptions['size']): PDFKit.PDFDocument => {
-  const doc: PDFKit.PDFDocument = new PDFDocument({ margin: 0, size })
 
-  for (let index: number = 0; index < pages.length; index++) {
-    if (index != 0) doc.addPage()
+enum types {
+  JPG = 'jpg',
+  JPEG = 'jpeg',
+  PNG = 'png',
+  WebP = 'webp',
+  GIF = 'gif',
+  AVIF = 'avif',
+  TIFF = 'tiff',
+  SVG = 'svg',
+  HEIC = 'heic'
+}
 
-    doc.image(pages[index], 0, 0, { 
-	    fit: [doc.page.width - doc.page.margins.left - doc.page.margins.right, doc.page.height - doc.page.margins.top - doc.page.margins.bottom],
-      align: 'center', valign: 'center' 
-    })
+const genPDFPage = async (imgBuf: Buffer, doc: PDFDocument) => {
+  const {type, width, height} = sizeOf(imgBuf)
+  const page = doc.addPage([width, height])
+  let image4;
+  console.log(type)
+  switch (type) {
+    case types.PNG:
+      image4 = await doc.embedPng(imgBuf)
+      break
+    case types.JPEG:
+    case types.JPG:
+      image4 = await doc.embedJpg(imgBuf)
+      break
+    default:
+      // @ts-ignore
+      const jpg = await sharp(imgBuf).toFormat(types.JPG).toBuffer()
+      image4 = await doc.embedJpg(jpg)
   }
 
-  doc.end()
+  page.drawImage(image4, {
+    x: 0, y: 0, width, height
+  })
+}
+const imageToPDF = async (pages: string[] = []) => {
+  const doc = await PDFDocument.create()
 
-  return doc
+  for (let index = 0; index < pages.length; index++) {
+    const imgBuf = fs.readFileSync(pages[index])
+    await genPDFPage(imgBuf, doc)
+  }
+  return await doc.save()
 };
+
 
 // Importing from a file was always causing issues with either CJS or ESM and I felt bundling was an overkill
 const sizes = {
@@ -72,4 +105,4 @@ const sizes = {
 }
 
 export default imageToPDF
-export { imageToPDF as convert, sizes }
+export {imageToPDF as convert, sizes, types}

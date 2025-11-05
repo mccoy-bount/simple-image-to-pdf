@@ -1,19 +1,15 @@
 {
   "name": "simple-image-to-pdf",
+  "author": "McCoy",
   "version": "0.0.1",
   "description": "A simple image to PDF converter",
-  "author": {
-    "name": "",
-    "email": "",
-    "url": ""
-  },
   "keywords": [
     "pdf",
     "image"
   ],
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/mccoy-bount/simple-image-to-pdf.git"
   },
   "source": "index.ts",
   "main": "dist/cjs/index.js",
@@ -38,8 +34,12 @@
   },
   "license": "ISC",
   "dependencies": {
+    "image-size": "^2.0.2",
+    "pdf-lib": "^1.17.1",
+    "sharp": "^0.34.4"
   },
   "devDependencies": {
+    "@types/node": "^24.10.0",
     "typescript": "^5.7.2"
   }
 }
