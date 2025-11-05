@@ -20,7 +20,6 @@ const genPDFPage = async (imgBuf: Buffer, doc: PDFDocument) => {
   const {type, width, height} = sizeOf(imgBuf)
   const page = doc.addPage([width, height])
   let image4;
-  console.log(type)
   switch (type) {
     case types.PNG:
       image4 = await doc.embedPng(imgBuf)
@@ -50,7 +49,6 @@ const imageToPDF = async (pages: string[] = []) => {
 };
 
 
-// Importing from a file was always causing issues with either CJS or ESM and I felt bundling was an overkill
 const sizes = {
   "4A0": [4767.87, 6740.79],
   "2A0": [3370.39, 4767.87],
