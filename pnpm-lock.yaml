@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      image-size:
-        specifier: ^2.0.2
-        version: 2.0.2
       pdf-lib:
         specifier: ^1.17.1
         version: 1.17.1
@@ -169,11 +166,6 @@ packages:
     resolution: {integrity: sha512-Btj2BOOO83o3WyH59e8MgXsxEQVcarkUOpEYrubB0urwnN10yQ364rsiByU11nZlqWYZm05i/of7io4mzihBtQ==}
     engines: {node: '>=8'}
 
-  image-size@2.0.2:
-    resolution: {integrity: sha512-IRqXKlaXwgSMAMtpNzZa1ZAe8m+Sa1770Dhk8VkSsP9LS+iHD62Zd8FQKs8fbPiagBE7BzoFX23cxFnwshpV6w==}
-    engines: {node: '>=16.x'}
-    hasBin: true
-
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
 
@@ -311,8 +303,6 @@ snapshots:
       undici-types: 7.16.0
 
   detect-libc@2.1.2: {}
-
-  image-size@2.0.2: {}
 
   pako@1.0.11: {}
 

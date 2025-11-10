@@ -1,10 +1,11 @@
 import * as fs from 'fs';
-import sizeOf from 'image-size'
 import {PDFDocument} from 'pdf-lib'
 import sharp from 'sharp';
 
+//todo: 1.中英文档说明，2。增加图片源的入参。3提供logger。4。提供图片的压缩功能，5文档尺寸可设置，6写用例
 
-enum types {
+
+enum formats {
   JPG = 'jpg',
   JPEG = 'jpeg',
   PNG = 'png',
@@ -16,17 +17,18 @@ enum types {
   HEIC = 'heic'
 }
 
-const genPDFPage = async (imgBuf: Buffer, doc: PDFDocument) => {
-  const {type, width, height} = sizeOf(imgBuf)
+const genPDFPage = async (imageSource: Buffer | string, doc: PDFDocument) => {
+  const sharper = sharp(imageSource)
+  const {format, width,height} = await sharper.metadata()
   const page = doc.addPage([width, height])
-  let image4;
-  switch (type) {
-    case types.PNG:
-      image4 = await doc.embedPng(imgBuf)
+  let image4 = null;
+  switch (format) {
+    case formats.PNG:
+      image4 = await doc.embedPng(await sharper.toBuffer())
       break
-    case types.JPEG:
-    case types.JPG:
-      image4 = await doc.embedJpg(imgBuf)
+    case formats.JPEG:
+    case formats.JPG:
+      image4 = await doc.embedJpg(await sharper.toBuffer())
       break
     default:
       // @ts-ignore
@@ -103,4 +105,4 @@ const sizes = {
 }
 
 export default imageToPDF
-export {imageToPDF as convert, sizes, types}
+export {imageToPDF as convert, sizes, formats}
