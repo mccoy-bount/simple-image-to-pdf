@@ -1,7 +1,7 @@
 import * as fs from 'fs';
 import sizeOf from 'image-size'
 import {PDFDocument} from 'pdf-lib'
-import * as sharp from 'sharp';
+import sharp from 'sharp';
 
 
 enum types {
